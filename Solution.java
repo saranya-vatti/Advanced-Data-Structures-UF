@@ -3,83 +3,204 @@ import java.io.*;
 import java.lang.reflect.Array;
 import java.util.*;
 public class Solution {
-    private static int m;
-
-    private static void initialize(int m) {
-        // TODO - finish the function
-    }
-
-    private static void insert(double key, int value) {
-        // TODO - finish the function
-        // Search for the item - search should return [Node node, boolean isPresent}
-        // Case 1 - insert into underfull leaf
-        // All we need to do is insert the pair into the arraylist of pairs of
-        // the leaf node. children will be null
-        // Case 2 - Leaf gets full
-        // Split the node: Left half pairs stay in the old leaf, Right half pairs go
-        // to new node. In between key has to go to the parent.
-        // Insert the in between key into parent, then order them properly,
-        // On the way down, store the nodes in stack, on the way up, pop them and
-        // update them
-        System.out.println("Inserting Key : " + key + "; value : " + value);
-    }
-
-    /**
-     * Returns all values associated with the key
-     * @param key {double} Key we need to search for
-     * @return values {int[]} All the values associated with the key.
-     */
-    private static int[] search(double key) {
-        // TODO - finish the function
-        // TODO - finish the function
-        // TODO - print to a file
-        int[] values = {};
-        System.out.println("Searching for key : " + key);
-        return values;
-    }
-
-    /**
-     * Returns all values associated with the key
-     * @param key1 {double} Starting key
-     * @param key2 {double} Ending key
-     * @return values {int[]} All the values between the two given keys
-     */
-    private static int[] search(double key1, double key2) {
-        // TODO - finish the function
-        // TODO - print to a file
-        int[] values = {};
-        System.out.println("Searching between keys : " + key1 + " and " + key2);
-        return values;
-    }
 
     public static void main(String[] args) {
-        String fileName = args[0];
-        String s;
-        try {
-            FileReader fileReader = new FileReader(fileName);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            while((s = bufferedReader.readLine()) != null) {
-                // TODO: use regex
-                if(s.indexOf("Insert(") != -1) {
-                    double key = Double.parseDouble(s.split("Insert\\(")[1].split(",")[0]);
-                    int val = Integer.parseInt(s.split("Value")[1].split("\\)")[0]);
-                    insert(key, val);
-                } else if(s.indexOf("Search(") != -1) {
-                    if(s.indexOf(",") == -1) {
-                        double key = Double.parseDouble(s.split("Search\\(")[1].split("\\)")[0]);
-                        search(key);
-                    } else {
-                        double key1 = Double.parseDouble(s.split("Search\\(")[1].split(",")[0]);
-                        double key2 = Double.parseDouble(s.split("Search\\(")[1].split(",")[1].split("\\)")[0]);
-                        search(key1, key2);
-                    }
+        ArrayList<Integer> rootKeyList = new ArrayList<>();
+        rootKeyList.add(14);
+        rootKeyList.add(25);
+        rootKeyList.add(36);
+        ArrayList<Integer> node1KeyList = new ArrayList<>();
+        node1KeyList.add(7);
+        node1KeyList.add(10);
+        node1KeyList.add(13);
+        ArrayList<Integer> leaf1Keys = new ArrayList<>();
+        leaf1Keys.add(1);
+        leaf1Keys.add(5);
+        ArrayList<Double> leaf1Vals = new ArrayList<>();
+        leaf1Vals.add(1.1);
+        leaf1Vals.add(5.1);
+        Leaf leaf1 = new Leaf(leaf1Keys, leaf1Vals);
+        ArrayList<Integer> leaf2Keys = new ArrayList<>();
+        leaf2Keys.add(7);
+        leaf2Keys.add(8);
+        leaf2Keys.add(9);
+        ArrayList<Double> leaf2Vals = new ArrayList<>();
+        leaf2Vals.add(7.1);
+        leaf2Vals.add(8.1);
+        leaf2Vals.add(9.1);
+        Leaf leaf2 = new Leaf(leaf2Keys, leaf2Vals);
+        leaf1.setNextLeaf(leaf2);
+        leaf2.setPreviousLeaf(leaf1);
+        ArrayList<Integer> leaf3Keys = new ArrayList<>();
+        leaf3Keys.add(10);
+        leaf3Keys.add(11);
+        ArrayList<Double> leaf3Vals = new ArrayList<>();
+        leaf3Vals.add(10.1);
+        leaf3Vals.add(11.1);
+        Leaf leaf3 = new Leaf(leaf3Keys, leaf3Vals);
+        leaf2.setNextLeaf(leaf3);
+        leaf3.setPreviousLeaf(leaf2);
+        ArrayList<Integer> leaf4Keys = new ArrayList<>();
+        leaf4Keys.add(13);
+        leaf4Keys.add(15);
+        ArrayList<Double> leaf4Vals = new ArrayList<>();
+        leaf4Vals.add(13.1);
+        leaf4Vals.add(15.1);
+        Leaf leaf4 = new Leaf(leaf4Keys, leaf4Vals);
+        leaf3.setNextLeaf(leaf4);
+        leaf4.setPreviousLeaf(leaf3);
+        ArrayList<Node> node1List = new ArrayList<>();
+        node1List.add(leaf1);
+        node1List.add(leaf2);
+        node1List.add(leaf3);
+        node1List.add(leaf4);
+        InternalNode node1 = new InternalNode(node1KeyList, node1List);
+
+        ArrayList<Integer> node2KeyList = new ArrayList<>();
+        node2KeyList.add(15);
+        node2KeyList.add(17);
+        node2KeyList.add(21);
+        node2KeyList.add(23);
+        ArrayList<Integer> leaf5Keys = new ArrayList<>();
+        leaf5Keys.add(14);
+        ArrayList<Double> leaf5Vals = new ArrayList<>();
+        leaf5Vals.add(14.1);
+        Leaf leaf5 = new Leaf(leaf5Keys, leaf5Vals);
+        leaf4.setNextLeaf(leaf5);
+        leaf5.setPreviousLeaf(leaf4);
+        ArrayList<Integer> leaf6Keys = new ArrayList<>();
+        leaf6Keys.add(16);
+        ArrayList<Double> leaf6Vals = new ArrayList<>();
+        leaf6Vals.add(16.1);
+        Leaf leaf6 = new Leaf(leaf6Keys, leaf6Vals);
+        leaf5.setNextLeaf(leaf6);
+        leaf6.setPreviousLeaf(leaf5);
+        ArrayList<Integer> leaf7Keys = new ArrayList<>();
+        leaf7Keys.add(18);
+        leaf7Keys.add(20);
+        ArrayList<Double> leaf7Vals = new ArrayList<>();
+        leaf7Vals.add(18.1);
+        leaf7Vals.add(20.1);
+        Leaf leaf7 = new Leaf(leaf7Keys, leaf7Vals);
+        leaf6.setNextLeaf(leaf7);
+        leaf7.setPreviousLeaf(leaf6);
+        ArrayList<Integer> leaf8Keys = new ArrayList<>();
+        leaf8Keys.add(22);
+        ArrayList<Double> leaf8Vals = new ArrayList<>();
+        leaf8Vals.add(22.1);
+        Leaf leaf8 = new Leaf(leaf8Keys, leaf8Vals);
+        leaf7.setNextLeaf(leaf8);
+        leaf8.setPreviousLeaf(leaf7);
+        ArrayList<Integer> leaf9Keys = new ArrayList<>();
+        leaf9Keys.add(23);
+        leaf9Keys.add(24);
+        ArrayList<Double> leaf9Vals = new ArrayList<>();
+        leaf9Vals.add(23.1);
+        leaf9Vals.add(24.1);
+        Leaf leaf9 = new Leaf(leaf9Keys, leaf9Vals);
+        leaf8.setNextLeaf(leaf9);
+        leaf9.setPreviousLeaf(leaf8);
+        ArrayList<Node> node2List = new ArrayList<>();
+        node2List.add(leaf5);
+        node2List.add(leaf6);
+        node2List.add(leaf7);
+        node2List.add(leaf8);
+        node2List.add(leaf9);
+        InternalNode node2 = new InternalNode(node2KeyList, node2List);
+
+        ArrayList<Integer> node3KeyList = new ArrayList<>();
+        node3KeyList.add(25);
+        node3KeyList.add(27);
+        ArrayList<Integer> leaf10Keys = new ArrayList<>();
+        leaf10Keys.add(24);
+        ArrayList<Double> leaf10Vals = new ArrayList<>();
+        leaf10Vals.add(24.1);
+        Leaf leaf10 = new Leaf(leaf10Keys, leaf10Vals);
+        leaf9.setNextLeaf(leaf10);
+        leaf10.setPreviousLeaf(leaf9);
+        ArrayList<Integer> leaf11Keys = new ArrayList<>();
+        leaf11Keys.add(25);
+        ArrayList<Double> leaf11Vals = new ArrayList<>();
+        leaf11Vals.add(25.1);
+        Leaf leaf11 = new Leaf(leaf11Keys, leaf11Vals);
+        leaf10.setNextLeaf(leaf11);
+        leaf11.setPreviousLeaf(leaf10);
+        ArrayList<Integer> leaf12Keys = new ArrayList<>();
+        leaf12Keys.add(26);
+        ArrayList<Double> leaf12Vals = new ArrayList<>();
+        leaf12Vals.add(26.1);
+        Leaf leaf12 = new Leaf(leaf12Keys, leaf12Vals);
+        leaf11.setNextLeaf(leaf12);
+        leaf12.setPreviousLeaf(leaf11);
+        ArrayList<Node> node3List = new ArrayList<>();
+        node3List.add(leaf10);
+        node3List.add(leaf11);
+        node3List.add(leaf12);
+        InternalNode node3 = new InternalNode(node3KeyList, node3List);
+
+        ArrayList<Integer> node4KeyList = new ArrayList<>();
+        node4KeyList.add(38);
+        node4KeyList.add(39);
+        node4KeyList.add(52);
+        ArrayList<Integer> leaf13Keys = new ArrayList<>();
+        leaf13Keys.add(37);
+        ArrayList<Double> leaf13Vals = new ArrayList<>();
+        leaf13Vals.add(37.1);
+        Leaf leaf13 = new Leaf(leaf13Keys, leaf13Vals);
+        leaf12.setNextLeaf(leaf13);
+        leaf13.setPreviousLeaf(leaf12);
+        ArrayList<Integer> leaf14Keys = new ArrayList<>();
+        leaf14Keys.add(38);
+        ArrayList<Double> leaf14Vals = new ArrayList<>();
+        leaf14Vals.add(38.1);
+        Leaf leaf14 = new Leaf(leaf14Keys, leaf14Vals);
+        leaf13.setNextLeaf(leaf14);
+        leaf14.setPreviousLeaf(leaf13);
+        ArrayList<Integer> leaf15Keys = new ArrayList<>();
+        leaf15Keys.add(39);
+        leaf15Keys.add(51);
+        ArrayList<Double> leaf15Vals = new ArrayList<>();
+        leaf15Vals.add(39.1);
+        leaf15Vals.add(51.1);
+        Leaf leaf15 = new Leaf(leaf15Keys, leaf15Vals);
+        leaf14.setNextLeaf(leaf15);
+        leaf15.setPreviousLeaf(leaf14);
+        ArrayList<Integer> leaf16Keys = new ArrayList<>();
+        leaf16Keys.add(52);
+        leaf16Keys.add(63);
+        ArrayList<Double> leaf16Vals = new ArrayList<>();
+        leaf16Vals.add(52.1);
+        leaf16Vals.add(63.1);
+        Leaf leaf16 = new Leaf(leaf16Keys, leaf16Vals);
+        leaf15.setNextLeaf(leaf16);
+        leaf16.setPreviousLeaf(leaf15);
+        ArrayList<Node> node4List = new ArrayList<>();
+        node4List.add(leaf13);
+        node4List.add(leaf14);
+        node4List.add(leaf15);
+        node4List.add(leaf16);
+        InternalNode node4 = new InternalNode(node4KeyList, node4List);
+        ArrayList<Node> rootList = new ArrayList<>();
+        rootList.add(node1);
+        rootList.add(node2);
+        rootList.add(node3);
+        rootList.add(node4);
+        InternalNode rootNode = new InternalNode(rootKeyList, rootList);
+        BPlusTree tree = new BPlusTree(rootNode);
+        Scanner in = new Scanner(System.in);
+        int key1 = in.nextInt();
+        int key2 = in.nextInt();
+        while(key1 != -1) {
+            ArrayList<Double> values = tree.search(key1, key2);
+            if (values == null) {
+                System.out.println("Not found");
+            } else {
+                for(double val: values) {
+                    System.out.println(val);
                 }
             }
-            bufferedReader.close();
-        } catch(FileNotFoundException ex) {
-            System.out.println("Unable to open file '" + fileName + "'");
-        } catch(IOException ex) {
-            System.out.println("Error reading file '" + fileName + "'");
+            key1 = in.nextInt();
+            key2 = in.nextInt();
         }
     }
 }

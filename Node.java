@@ -29,36 +29,6 @@ class Node {
     public int getNumOfKeys() {
         return this.numOfKeys;
     }
-    public int searchWithinNode (int key, int start, int end) {
-        if(keys == null) return -1;
-        if(keys.get(start) == key) {
-            int index = start;
-            while(keys.get(index) == key) {
-                index--;
-            }
-            return index+1;
-        }
-        if(keys.get(end) == key) {
-            int index = end;
-            while(keys.get(index) == key) {
-                index++;
-            }
-            return index-1;
-        }
-        int mid = (start+end)/2;
-        if(keys.get(start) < key && key <= mid) {
-            return searchWithinNode(key, start + 1, mid);
-        }
-        if(mid <= key && key < keys.get(end)) {
-            return searchWithinNode(key, mid , end - 1);
-        }
-        // key < keys.get(start) || key > keys.get(end)
-        return -1;
-    }
-    public int searchWithinNode (int key) {
-        // returns the first index of the key occurence in the arraylist
-        return searchWithinNode(key, 0, numOfKeys);
-    }
     public Node getChildNode(int index) {
         return null;
     }
