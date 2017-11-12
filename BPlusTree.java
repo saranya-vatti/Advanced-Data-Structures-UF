@@ -3,11 +3,22 @@ import com.company.InternalNode;
 import com.company.Node;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 class BPlusTree {
-    InternalNode root;
+    Node root;
+    int order;
 
-    BPlusTree(InternalNode root) {
+    BPlusTree(int order) {
+        this.root = null;
+        this.order = order;
+    }
+
+    /**
+     * Unit testing "search"
+     * @param root Root of the already built B+ Tree
+     */
+    BPlusTree(Node root) {
         this.root = root;
     }
 
@@ -79,5 +90,40 @@ class BPlusTree {
      */
     public ArrayList<Double> search(int key1, int key2) {
         return search(root, key1, key2);
+    }
+
+    public void insert (int key, double value) {
+        if(root == null) {
+            ArrayList<Integer> leafKeyList = new ArrayList<>();
+            leafKeyList.add(key);
+            ArrayList<Double> leafValList = new ArrayList<>();
+            leafValList.add(value);
+            root = new Leaf(leafKeyList, leafValList);
+            return;
+        }
+
+        // Search for where it's rightful place is, all the while inserting the
+        // nodes visited into a stack
+        Stack<Node> visited = new Stack<>();
+        visited.push(root);
+        Node currNode = root;
+        while(!currNode.isLeaf()) {
+            if (key < currNode.getLeastKey()) {
+                currNode = currNode.getChildNode(0);
+                visited.push(currNode);
+            } else if (key >= currNode.getHighestKey()) {
+                currNode = currNode.getLastNode();
+                visited.push(currNode);
+            } else {
+                ArrayList<Integer> currNodeKeys = currNode.getKeys();
+                int index;
+                for (index = currNodeKeys.size() - 1; index >= 0; index--) {
+                    if (currNodeKeys.get(index) <= key) break;
+                }
+                currNode = currNode.getChildNode(index + 1);
+                visited.push(currNode);
+            }
+        }
+        // TODO: Insert into leaf - the leaf to be inserted into will be in currNode.
     }
 }

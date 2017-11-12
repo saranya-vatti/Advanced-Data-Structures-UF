@@ -186,7 +186,7 @@ public class Solution {
         rootList.add(node3);
         rootList.add(node4);
         InternalNode rootNode = new InternalNode(rootKeyList, rootList);
-        BPlusTree tree = new BPlusTree(rootNode);
+        BPlusTree tree = new BPlusTree(rootNode, 4);
         Scanner in = new Scanner(System.in);
         int key1 = in.nextInt();
         int key2 = in.nextInt();
