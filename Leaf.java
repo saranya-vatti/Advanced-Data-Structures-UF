@@ -46,4 +46,20 @@ class Leaf extends Node {
     public void addVal (int index, double val) {
         this.values.add(index, val);
     }
+    @Override
+    public void removeVal(int index) {
+        this.values.remove(index);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder("");
+        for(int i=0;i<super.getKeys().size();i++) {
+            result.append(super.getKey(i));
+            result.append(",");
+            result.append(this.getValue(i));
+            result.append("; ");
+        }
+        return result.toString();
+    }
 }

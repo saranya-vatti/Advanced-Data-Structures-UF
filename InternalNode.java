@@ -1,6 +1,6 @@
 package com.company;
 import com.company.Node;
-
+import java.util.*;
 import java.util.ArrayList;
 
 class InternalNode extends Node {
@@ -34,5 +34,20 @@ class InternalNode extends Node {
     }
     public boolean isLeaf() {
         return false;
+    }
+
+    @Override
+    public void addChildNode(int index, Node node) {
+        children.add(index, node);
+    }
+
+    @Override
+    public void removeChildNode(int index) {
+        this.children.remove(index);
+    }
+
+    @Override
+    public String toString() {
+        return "IN : " + Arrays.toString(super.getKeys().toArray());
     }
 }

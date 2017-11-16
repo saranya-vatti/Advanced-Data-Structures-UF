@@ -7,12 +7,19 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 class BPlusTree {
-    Node root;
-    int order;
+    private Node root;
+    private int order;
+    private int MAX_NODE_SIZE;
+    private boolean isDebugMode = false;
+
+    private void debug(String s) {
+        if(isDebugMode) System.out.println(s);
+    }
 
     BPlusTree(int order) {
         this.root = null;
         this.order = order;
+        this.MAX_NODE_SIZE = order - 1;
     }
 
     /**
@@ -106,30 +113,103 @@ class BPlusTree {
         // Search for where it's rightful place is, all the while inserting the
         // nodes visited into a stack
         Stack<Node> visited = new Stack<>();
-        visited.push(root);
+        Stack<Integer> indexes= new Stack<>();
+        indexes.push(-1);
         Node currNode = root;
-        while(true) {
-            System.out.println(this.toString());
+        while(currNode != null) {
+            debug("1 : " + this.toString());
             visited.push(currNode);
             if(currNode.isLeaf() || (key >= currNode.getLeastKey() && key < currNode
                     .getHighestKey())) {
-                ArrayList<Integer> currNodeKeys = currNode.getKeys();
                 int index;
-                for (index = currNodeKeys.size() - 1; index >= 0; index--) {
-                    if (currNodeKeys.get(index) <= key) break;
+                for (index = currNode.getKeys().size() - 1; index >= 0; index--) {
+                    if (currNode.getKeys().get(index) < key) break;
                 }
+                debug("2 : " + currNode.toString());
+                debug("3 : " + index);
                 if (currNode.isLeaf()) {
-                    // TODO: the splits
                     currNode.addKey(index + 1, key);
                     currNode.addVal(index + 1, value);
+                    debug("4 : " + currNode.toString());
+                    currNode = visited.pop();
+                    debug("5 : " + currNode.toString());
+                    debug("6 : " + currNode.getNumOfKeys());
+                    debug("7 MAX_NODE_SIZE : " + MAX_NODE_SIZE);
+                    while(currNode.getNumOfKeys() > MAX_NODE_SIZE) {
+                        debug("8 : " + this.toString());
+                        ArrayList<Integer> keyList = new ArrayList<>();
+                        ArrayList<Double> valList = new ArrayList<>();
+                        ArrayList<Node> nodeList = new ArrayList<>();
+                        for(int i=(currNode.getKeys().size()/2);i<currNode.getKeys().size();) {
+                            keyList.add(currNode.getKey(i));
+                            currNode.removeKey(i);
+                            if (currNode.isLeaf()) {
+                                valList.add(currNode.getValue(i));
+                                currNode.removeVal(i);
+                            } else {
+                                nodeList.add(currNode.getChildNode(i));
+                                currNode.removeChildNode(i);
+                            }
+                        }
+                        debug("9 Going to move keys : " + Arrays
+                                .toString(keyList.toArray()));
+                        if (currNode.isLeaf()) debug("10 Going to move " +
+                                "values : " + Arrays.toString(valList.toArray()));
+                        debug("11 : " + this.toString());
+                        Node parent;
+                        int parentIndex;
+                        if(visited.isEmpty()) {
+                            // We need to create a new parent as the root itself is
+                            // maxed out
+                            ArrayList<Integer> newRootKeys = new ArrayList<>();
+                            ArrayList<Node> newRootChildren = new ArrayList<>();
+                            newRootChildren.add(currNode);
+                            parent = new InternalNode(newRootKeys, newRootChildren);
+                            this.root = parent;
+                            parentIndex = 0;
+                        } else {
+                            parent = visited.pop();
+                            parentIndex = indexes.pop();
+                        }
+
+                        if (currNode.isLeaf()) {
+                            // We create a new leaf and add the pointer from the
+                            // parent internal node to the new leaf at the correct
+                            // index
+                            Leaf newLeaf = new Leaf(keyList, valList);
+                            parent.addChildNode(parentIndex+1, newLeaf);
+
+                            // We have removed all the keys with mid+1. So the last
+                            // element remaining in the node's keylist will be the
+                            // earlier mid key
+                            parent.addKey(parentIndex, newLeaf.getKey(0));
+                            debug("12 : " + parent.toString());
+                        } else {
+                            // We create a new internal node and add the pointer from
+                            // the parent internal node to the new internal node at
+                            // the correct index
+                            InternalNode newNode = new InternalNode(keyList, nodeList);
+                            parent.addChildNode(index, newNode);
+
+                            // We have removed all the keys with mid+1. So the last
+                            // element remaining in the node's keylist will be the
+                            // earlier mid key
+                            parent.addKey(parentIndex, newNode.getKey(0));
+                            debug("12 : " + parent.toString());
+                        }
+                        currNode = parent;
+                    }
                     break;
                 } else {
                     currNode = currNode.getChildNode(index + 1);
                 }
+                indexes.push(index+1);
             } else if (key < currNode.getLeastKey()) {
                 currNode = currNode.getChildNode(0);
+                indexes.push(0);
             } else {
                 // key >= currNode.getHighestKey()
+                indexes.push(currNode.getNumOfKeys());
                 currNode = currNode.getLastNode();
             }
         }
@@ -142,7 +222,7 @@ class BPlusTree {
         StringBuilder result = new StringBuilder("");
         Queue<Node> qu = new LinkedList<>();
         qu.add(root);
-        while(true) {
+        while(!qu.isEmpty()) {
             Node parent = qu.remove();
             result.append("Level ");
             result.append(level);
@@ -154,12 +234,13 @@ class BPlusTree {
                     result.append(parent.getValue(i));
                     result.append("; ");
                 }
-                break;
+                result.append("\n");
             } else {
                 result.append(Arrays.toString(parent.getKeys().toArray()));
+                result.append("\n");
                 qu.addAll(parent.getChildren());
+                level++;
             }
-            level++;
         }
         return result.toString();
     }

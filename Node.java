@@ -1,11 +1,9 @@
 package com.company;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 class Node {
-    // numOfKeys will be 2 or 3 or 4 for 2-3-4 trees (B trees of order 4)
-    private int numOfKeys;
-
     // size = numOfKeys
     private ArrayList<Integer> keys;
 
@@ -21,13 +19,13 @@ class Node {
     Node (ArrayList<Integer> keys) {
         Collections.sort(keys);
         this.keys = keys;
-        this.numOfKeys = keys.size();
     }
     public boolean isLeaf() {
         return true;
     }
     public int getNumOfKeys() {
-        return this.numOfKeys;
+        // numOfKeys will be 2 or 3 or 4 for 2-3-4 trees (B trees of order 4)
+        return keys.size();
     }
     public Node getChildNode(int index) {
         return null;
@@ -36,7 +34,7 @@ class Node {
         return keys.get(0);
     }
     public int getHighestKey () {
-        return keys.get(numOfKeys - 1);
+        return keys.get(keys.size() - 1);
     }
     public Node getLastNode () {
         return null;
@@ -54,5 +52,14 @@ class Node {
     }
     public ArrayList<Node> getChildren() {
         return null;
+    }
+    public void addChildNode (int index, Node node) {
+    }
+    public void removeKey(int index) {
+        keys.remove(index);
+    }
+    public void removeVal(int index) {
+    }
+    public void removeChildNode(int index) {
     }
 }
