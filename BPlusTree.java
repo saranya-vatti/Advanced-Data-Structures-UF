@@ -1,6 +1,7 @@
 package com.company;
 import com.company.InternalNode;
 import com.company.Node;
+import java.util.*;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -107,23 +108,59 @@ class BPlusTree {
         Stack<Node> visited = new Stack<>();
         visited.push(root);
         Node currNode = root;
-        while(!currNode.isLeaf()) {
-            if (key < currNode.getLeastKey()) {
-                currNode = currNode.getChildNode(0);
-                visited.push(currNode);
-            } else if (key >= currNode.getHighestKey()) {
-                currNode = currNode.getLastNode();
-                visited.push(currNode);
-            } else {
+        while(true) {
+            System.out.println(this.toString());
+            visited.push(currNode);
+            if(currNode.isLeaf() || (key >= currNode.getLeastKey() && key < currNode
+                    .getHighestKey())) {
                 ArrayList<Integer> currNodeKeys = currNode.getKeys();
                 int index;
                 for (index = currNodeKeys.size() - 1; index >= 0; index--) {
                     if (currNodeKeys.get(index) <= key) break;
                 }
-                currNode = currNode.getChildNode(index + 1);
-                visited.push(currNode);
+                if (currNode.isLeaf()) {
+                    // TODO: the splits
+                    currNode.addKey(index + 1, key);
+                    currNode.addVal(index + 1, value);
+                    break;
+                } else {
+                    currNode = currNode.getChildNode(index + 1);
+                }
+            } else if (key < currNode.getLeastKey()) {
+                currNode = currNode.getChildNode(0);
+            } else {
+                // key >= currNode.getHighestKey()
+                currNode = currNode.getLastNode();
             }
         }
-        // TODO: Insert into leaf - the leaf to be inserted into will be in currNode.
+    }
+
+    @Override
+    public String toString() {
+        if(root == null) return "";
+        int level = 1;
+        StringBuilder result = new StringBuilder("");
+        Queue<Node> qu = new LinkedList<>();
+        qu.add(root);
+        while(true) {
+            Node parent = qu.remove();
+            result.append("Level ");
+            result.append(level);
+            result.append("-> ");
+            if(parent.isLeaf()) {
+                for(int i=0;i<parent.getKeys().size();i++) {
+                    result.append(parent.getKey(i));
+                    result.append(",");
+                    result.append(parent.getValue(i));
+                    result.append("; ");
+                }
+                break;
+            } else {
+                result.append(Arrays.toString(parent.getKeys().toArray()));
+                qu.addAll(parent.getChildren());
+            }
+            level++;
+        }
+        return result.toString();
     }
 }

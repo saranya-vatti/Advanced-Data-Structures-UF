@@ -42,4 +42,8 @@ class Leaf extends Node {
     public Node getNext () {
         return this.next;
     }
+    @Override
+    public void addVal (int index, double val) {
+        this.values.add(index, val);
+    }
 }

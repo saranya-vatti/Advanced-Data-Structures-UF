@@ -24,7 +24,7 @@ class Node {
         this.numOfKeys = keys.size();
     }
     public boolean isLeaf() {
-        return false;
+        return true;
     }
     public int getNumOfKeys() {
         return this.numOfKeys;
@@ -45,6 +45,14 @@ class Node {
         return Double.NaN;
     }
     public Node getNext () {
+        return null;
+    }
+    public void addVal (int index, double val) {
+    }
+    public void addKey (int index, int key) {
+        this.keys.add(index, key);
+    }
+    public ArrayList<Node> getChildren() {
         return null;
     }
 }

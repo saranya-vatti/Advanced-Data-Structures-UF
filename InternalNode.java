@@ -10,27 +10,27 @@ class InternalNode extends Node {
     // Arraylist of child pointers to other nodes - may be leaves or internal nodes
 
     // size = numOfKeys + 1
-    private ArrayList<Node> subTreePointer;
+    private ArrayList<Node> children;
 
     public ArrayList<Node> getSubTreePointer() {
-        return this.subTreePointer;
+        return this.children;
     }
 
     @Override
     public Node getChildNode(int index) {
-        return subTreePointer.get(index);
+        return children.get(index);
     }
     @Override
     public Node getLastNode () {
-        return subTreePointer.get(subTreePointer.size() - 1);
+        return children.get(children.size() - 1);
     }
-    public void setSubTreePointer(ArrayList<Node> subTreePointer) {
-        this.subTreePointer = subTreePointer;
+    public ArrayList<Node> getChildren() {
+        return this.children;
     }
 
     InternalNode(ArrayList<Integer> keys, ArrayList<Node> subTreePointer) {
         super(keys);
-        this.subTreePointer = subTreePointer;
+        this.children = subTreePointer;
     }
     public boolean isLeaf() {
         return false;
