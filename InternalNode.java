@@ -28,7 +28,7 @@ class InternalNode extends Node {
         return this.children;
     }
 
-    InternalNode(ArrayList<Integer> keys, ArrayList<Node> subTreePointer) {
+    InternalNode(ArrayList<Double> keys, ArrayList<Node> subTreePointer) {
         super(keys);
         this.children = subTreePointer;
     }

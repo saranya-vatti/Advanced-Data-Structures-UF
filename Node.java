@@ -5,18 +5,15 @@ import java.util.Collections;
 
 class Node {
     // size = numOfKeys
-    private ArrayList<Integer> keys;
+    private ArrayList<Double> keys;
 
-    public ArrayList<Integer> getKeys() {
+    public ArrayList<Double> getKeys() {
         return this.keys;
     }
-    public int getKey(int index) {
+    public double getKey(int index) {
         return this.keys.get(index);
     }
-    public void setKeys(ArrayList<Integer> keys) {
-        this.keys = keys;
-    }
-    Node (ArrayList<Integer> keys) {
+    Node (ArrayList<Double> keys) {
         Collections.sort(keys);
         this.keys = keys;
     }
@@ -30,24 +27,24 @@ class Node {
     public Node getChildNode(int index) {
         return null;
     }
-    public int getLeastKey () {
+    public double getLeastKey () {
         return keys.get(0);
     }
-    public int getHighestKey () {
+    public double getHighestKey () {
         return keys.get(keys.size() - 1);
     }
     public Node getLastNode () {
         return null;
     }
-    public double getValue (int index) {
-        return Double.NaN;
+    public int getValue (int index) {
+        return 0; // TODO: return NaN
     }
     public Node getNext () {
         return null;
     }
-    public void addVal (int index, double val) {
+    public void addVal (int index, int val) {
     }
-    public void addKey (int index, int key) {
+    public void addKey (int index, double key) {
         this.keys.add(index, key);
     }
     public ArrayList<Node> getChildren() {

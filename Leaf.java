@@ -4,13 +4,13 @@ import com.company.Node;
 import java.util.ArrayList;
 
 class Leaf extends Node {
-    private ArrayList<Double> values;
+    private ArrayList<Integer> values;
     private Leaf prev;
     private Leaf next;
-    public ArrayList<Double> getValues() {
+    public ArrayList<Integer> getValues() {
         return this.values;
     }
-    public void setValues(ArrayList<Double> vArr) {
+    public void setValues(ArrayList<Integer> vArr) {
         this.values = vArr;
     }
     public Leaf getNextLeaf() {
@@ -28,14 +28,14 @@ class Leaf extends Node {
     public boolean isLeaf() {
         return true;
     }
-    Leaf (ArrayList<Integer> keys, ArrayList<Double> values) {
+    Leaf (ArrayList<Double> keys, ArrayList<Integer> values) {
         super(keys);
         this.values = values;
         this.prev = null;
         this.next = null;
     }
     @Override
-    public double getValue (int index) {
+    public int getValue (int index) {
         return this.values.get(index);
     }
     @Override
@@ -43,7 +43,7 @@ class Leaf extends Node {
         return this.next;
     }
     @Override
-    public void addVal (int index, double val) {
+    public void addVal (int index, int val) {
         this.values.add(index, val);
     }
     @Override

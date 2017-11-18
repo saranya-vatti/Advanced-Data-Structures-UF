@@ -16,10 +16,11 @@ class BPlusTree {
         if(isDebugMode) System.out.println(s);
     }
 
-    BPlusTree(int order) {
+    BPlusTree(int order, boolean isDebugMode) {
         this.root = null;
         this.order = order;
         this.MAX_NODE_SIZE = order - 1;
+        this.isDebugMode = isDebugMode;
     }
 
     /**
@@ -42,20 +43,21 @@ class BPlusTree {
      * @param endKey - Ending key of the range, both inclusive
      * @return List of values whose keys match the given range
      */
-    public ArrayList<Double> search(Node node, int startKey, int endKey) {
+    public ArrayList<Integer> search(Node node, double startKey, double endKey) {
         Node currNode = node;
-        ArrayList<Integer> currNodeKeys = currNode.getKeys();
+        ArrayList<Double> currNodeKeys = currNode.getKeys();
         int index;
         for (index = currNodeKeys.size() - 1; index >= 0; index--) {
-            if (currNodeKeys.get(index) <= startKey) break;
+            if (Double.compare(currNodeKeys.get(index), startKey) < 0) break;
         }
+        index++;
+        debug("1 Broke at : " + currNodeKeys.get(index));
         if (currNode.isLeaf()) {
             // Every key in the leaf is greater than start key
             // We will then search the node from the start to find keys that fit range
-            if(index == -1) index++;
-            ArrayList<Double> values = new ArrayList<>();
-            int currKey = currNode.getKey(index);
-            while (currKey <= endKey) {
+            ArrayList<Integer> values = new ArrayList<>();
+            double currKey = currNode.getKey(index);
+            while (Double.compare(currKey, endKey) <= 0) {
                 values.add(currNode.getValue(index));
                 index++;
                 if (index >= currNode.getNumOfKeys()) {
@@ -70,10 +72,10 @@ class BPlusTree {
             }
             return values;
         }
-        if (startKey < currNode.getLeastKey()) {
+        if (Double.compare(startKey, currNode.getLeastKey()) < 0) {
             return search(currNode.getChildNode(0), startKey, endKey);
         }
-        if (startKey > currNode.getHighestKey()) {
+        if (Double.compare(startKey, currNode.getHighestKey()) > 0) {
             return search(currNode.getLastNode(), startKey, endKey);
         }
         return search(currNode.getChildNode(index + 1), startKey, endKey);
@@ -85,7 +87,7 @@ class BPlusTree {
      * @param key Key of the values that are needed
      * @return List of all the values associated with the key
      */
-    public ArrayList<Double> search(int key) {
+    public ArrayList<Integer> search(double key) {
         return search(root, key, key);
     }
 
@@ -96,15 +98,15 @@ class BPlusTree {
      * @param key2 Ending key of the values that are needed
      * @return List of all the values for the keys that fall in the range
      */
-    public ArrayList<Double> search(int key1, int key2) {
+    public ArrayList<Integer> search(double key1, double key2) {
         return search(root, key1, key2);
     }
 
-    public void insert (int key, double value) {
+    public void insert (double key, int value) {
         if(root == null) {
-            ArrayList<Integer> leafKeyList = new ArrayList<>();
+            ArrayList<Double> leafKeyList = new ArrayList<>();
             leafKeyList.add(key);
-            ArrayList<Double> leafValList = new ArrayList<>();
+            ArrayList<Integer> leafValList = new ArrayList<>();
             leafValList.add(value);
             root = new Leaf(leafKeyList, leafValList);
             return;
@@ -119,11 +121,11 @@ class BPlusTree {
         while(currNode != null) {
             debug("1 : " + this.toString());
             visited.push(currNode);
-            if(currNode.isLeaf() || (key >= currNode.getLeastKey() && key < currNode
-                    .getHighestKey())) {
+            if(currNode.isLeaf() || Double.compare(key, currNode.getLeastKey()) >=0 &&
+                    Double.compare(key,currNode.getHighestKey()) < 0 ) {
                 int index;
                 for (index = currNode.getKeys().size() - 1; index >= 0; index--) {
-                    if (currNode.getKeys().get(index) < key) break;
+                    if (Double.compare(currNode.getKeys().get(index), key) < 0) break;
                 }
                 debug("2 : " + currNode.toString());
                 debug("3 : " + index);
@@ -137,8 +139,8 @@ class BPlusTree {
                     debug("7 MAX_NODE_SIZE : " + MAX_NODE_SIZE);
                     while(currNode.getNumOfKeys() > MAX_NODE_SIZE) {
                         debug("8 : " + this.toString());
-                        ArrayList<Integer> keyList = new ArrayList<>();
-                        ArrayList<Double> valList = new ArrayList<>();
+                        ArrayList<Double> keyList = new ArrayList<>();
+                        ArrayList<Integer> valList = new ArrayList<>();
                         ArrayList<Node> nodeList = new ArrayList<>();
                         for(int i=(currNode.getKeys().size()/2);i<currNode.getKeys().size();) {
                             keyList.add(currNode.getKey(i));
@@ -161,7 +163,7 @@ class BPlusTree {
                         if(visited.isEmpty()) {
                             // We need to create a new parent as the root itself is
                             // maxed out
-                            ArrayList<Integer> newRootKeys = new ArrayList<>();
+                            ArrayList<Double> newRootKeys = new ArrayList<>();
                             ArrayList<Node> newRootChildren = new ArrayList<>();
                             newRootChildren.add(currNode);
                             parent = new InternalNode(newRootKeys, newRootChildren);
@@ -204,7 +206,7 @@ class BPlusTree {
                     currNode = currNode.getChildNode(index + 1);
                 }
                 indexes.push(index+1);
-            } else if (key < currNode.getLeastKey()) {
+            } else if (Double.compare(key, currNode.getLeastKey()) < 0) {
                 currNode = currNode.getChildNode(0);
                 indexes.push(0);
             } else {
