@@ -36,13 +36,13 @@ class Node {
     public Node getLastNode () {
         return null;
     }
-    public int getValue (int index) {
-        return 0; // TODO: return NaN
+    public String getValue (int index) {
+        return "Null";
     }
     public Node getNext () {
         return null;
     }
-    public void addVal (int index, int val) {
+    public void addVal (int index, String val) {
     }
     public void addKey (int index, double key) {
         this.keys.add(index, key);

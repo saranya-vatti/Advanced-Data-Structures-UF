@@ -18,7 +18,7 @@ public class Solution {
                 if(s.contains("Insert(")) {
                     double key = Double.parseDouble(s.split("Insert\\(")[1].split
                             (",")[0]);
-                    int val = Integer.parseInt(s.split("Value")[1].split("\\)")[0]);
+                    String val = s.split(",")[1].split("\\)")[0];
                     tree.insert(key, val);
                     if(isDebugMode)  System.out.println(tree.toString());
                 } else if(s.contains("Search(")) {

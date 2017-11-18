@@ -43,7 +43,7 @@ class BPlusTree {
      * @param endKey - Ending key of the range, both inclusive
      * @return List of values whose keys match the given range
      */
-    public ArrayList<Integer> search(Node node, double startKey, double endKey) {
+    public ArrayList<String> search(Node node, double startKey, double endKey) {
         Node currNode = node;
         ArrayList<Double> currNodeKeys = currNode.getKeys();
         int index;
@@ -55,7 +55,7 @@ class BPlusTree {
         if (currNode.isLeaf()) {
             // Every key in the leaf is greater than start key
             // We will then search the node from the start to find keys that fit range
-            ArrayList<Integer> values = new ArrayList<>();
+            ArrayList<String> values = new ArrayList<>();
             double currKey = currNode.getKey(index);
             while (Double.compare(currKey, endKey) <= 0) {
                 values.add(currNode.getValue(index));
@@ -87,7 +87,7 @@ class BPlusTree {
      * @param key Key of the values that are needed
      * @return List of all the values associated with the key
      */
-    public ArrayList<Integer> search(double key) {
+    public ArrayList<String> search(double key) {
         return search(root, key, key);
     }
 
@@ -98,15 +98,15 @@ class BPlusTree {
      * @param key2 Ending key of the values that are needed
      * @return List of all the values for the keys that fall in the range
      */
-    public ArrayList<Integer> search(double key1, double key2) {
+    public ArrayList<String> search(double key1, double key2) {
         return search(root, key1, key2);
     }
 
-    public void insert (double key, int value) {
+    public void insert (double key, String value) {
         if(root == null) {
             ArrayList<Double> leafKeyList = new ArrayList<>();
             leafKeyList.add(key);
-            ArrayList<Integer> leafValList = new ArrayList<>();
+            ArrayList<String> leafValList = new ArrayList<>();
             leafValList.add(value);
             root = new Leaf(leafKeyList, leafValList);
             return;
@@ -140,7 +140,7 @@ class BPlusTree {
                     while(currNode.getNumOfKeys() > MAX_NODE_SIZE) {
                         debug("8 : " + this.toString());
                         ArrayList<Double> keyList = new ArrayList<>();
-                        ArrayList<Integer> valList = new ArrayList<>();
+                        ArrayList<String> valList = new ArrayList<>();
                         ArrayList<Node> nodeList = new ArrayList<>();
                         for(int i=(currNode.getKeys().size()/2);i<currNode.getKeys().size();) {
                             keyList.add(currNode.getKey(i));
