@@ -25,13 +25,29 @@ public class Solution {
                     if(s.contains(",")) {
                         double key1 = Double.parseDouble(s.split("Search\\(")[1].split(",")[0]);
                         double key2 = Double.parseDouble(s.split("Search\\(")[1].split(",")[1].split("\\)")[0]);
-                        System.out.println(Arrays.toString(tree.search(key1, key2).toArray
-                                ()));
+                        ArrayList<Pair> pairs = tree.search(key1, key2);
+                        if(pairs.isEmpty()) {
+                            System.out.println("Null");
+                        } else {
+                            StringJoiner out = new StringJoiner(",");
+                            for(Pair pair:pairs) {
+                                out.add(pair.toString());
+                            }
+                            System.out.println(out.toString());
+                        }
                     } else {
                         double key = Double.parseDouble(s.split("Search\\(")[1].split
                                 ("\\)")[0]);
-                        System.out.println(Arrays.toString(tree.search(key).toArray
-                                ()));
+                        ArrayList<Pair> pairs = tree.search(key);
+                        if(pairs.isEmpty()) {
+                            System.out.println("Null");
+                        } else {
+                            StringJoiner out = new StringJoiner(",");
+                            for (Pair pair : pairs) {
+                                out.add(pair.val);
+                            }
+                            System.out.println(out.toString());
+                        }
                     }
                 }
             }

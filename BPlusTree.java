@@ -1,6 +1,7 @@
 package com.company;
 import com.company.InternalNode;
 import com.company.Node;
+import com.company.Pair;
 import java.util.*;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ class BPlusTree {
      * @param endKey - Ending key of the range, both inclusive
      * @return List of values whose keys match the given range
      */
-    public ArrayList<String> search(Node node, double startKey, double endKey) {
+    public ArrayList<Pair> search(Node node, double startKey, double endKey) {
         Node currNode = node;
         ArrayList<Double> currNodeKeys = currNode.getKeys();
         int index;
@@ -55,10 +56,11 @@ class BPlusTree {
         if (currNode.isLeaf()) {
             // Every key in the leaf is greater than start key
             // We will then search the node from the start to find keys that fit range
-            ArrayList<String> values = new ArrayList<>();
+            ArrayList<Pair> pairs = new ArrayList<>();
             double currKey = currNode.getKey(index);
             while (Double.compare(currKey, endKey) <= 0) {
-                values.add(currNode.getValue(index));
+                Pair pair = new Pair(currKey, currNode.getValue(index));
+                pairs.add(pair);
                 index++;
                 if (index >= currNode.getNumOfKeys()) {
                     if(currNode.getNext() != null) {
@@ -70,7 +72,7 @@ class BPlusTree {
                 }
                 currKey = currNode.getKey(index);
             }
-            return values;
+            return pairs;
         }
         if (Double.compare(startKey, currNode.getLeastKey()) < 0) {
             return search(currNode.getChildNode(0), startKey, endKey);
@@ -87,7 +89,7 @@ class BPlusTree {
      * @param key Key of the values that are needed
      * @return List of all the values associated with the key
      */
-    public ArrayList<String> search(double key) {
+    public ArrayList<Pair> search(double key) {
         return search(root, key, key);
     }
 
@@ -98,7 +100,7 @@ class BPlusTree {
      * @param key2 Ending key of the values that are needed
      * @return List of all the values for the keys that fall in the range
      */
-    public ArrayList<String> search(double key1, double key2) {
+    public ArrayList<Pair> search(double key1, double key2) {
         return search(root, key1, key2);
     }
 
