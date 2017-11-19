@@ -1,0 +1,42 @@
+
+Null
+
+Null
+
+Null
+Level 1-> 1.01,Value1; 
+
+(1.01,Value1)
+Level 1-> [7.07]
+Level 2-> [3.03, 5.05]
+Level 2-> [9.09, 11.011]
+Level 3-> 1.01,Value1; 2.02,Value2; 
+Level 3-> 3.03,Value3; 4.04,Value4; 
+Level 3-> 5.05,Value5; 6.06,Value6; 
+Level 3-> 7.07,Value7; 8.08,Value8; 
+Level 3-> 9.09,Value9; 10.01,Value10; 
+Level 3-> 11.011,Value11; 12.012,Value12; 13.013,Value13; 
+
+(1.01,Value1),(2.02,Value2),(3.03,Value3),(4.04,Value4),(5.05,Value5),(6.06,Value6),(7.07,Value7),(8.08,Value8),(9.09,Value9),(10.01,Value10),(11.011,Value11),(12.012,Value12),(13.013,Value13)
+Level 1-> [7.07]
+Level 2-> [3.03, 5.05]
+Level 2-> [9.09, 11.011]
+Level 3-> 1.01,Value1; 2.02,Value2; 
+Level 3-> 3.03,Value3; 4.04,Value4; 
+Level 3-> 5.05,Value5; 6.06,Value6; 
+Level 3-> 7.07,Value7; 8.08,Value8; 
+Level 3-> 9.09,Value9; 10.01,Value10; 
+Level 3-> 11.011,Value11; 12.012,Value12; 13.013,Value13; 
+
+Null
+Level 1-> [7.07]
+Level 2-> [3.03, 5.05]
+Level 2-> [9.09, 11.011]
+Level 3-> 1.01,Value1; 2.02,Value2; 
+Level 3-> 3.03,Value3; 4.04,Value4; 
+Level 3-> 5.05,Value5; 6.06,Value6; 
+Level 3-> 7.07,Value7; 8.08,Value8; 
+Level 3-> 9.09,Value9; 10.01,Value10; 
+Level 3-> 11.011,Value11; 12.012,Value12; 13.013,Value13; 
+
+Null

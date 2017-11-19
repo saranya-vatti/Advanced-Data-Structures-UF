@@ -14,6 +14,10 @@ public class Solution {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             BPlusTree tree = new BPlusTree(Integer.parseInt(bufferedReader.readLine
                     ()), isDebugMode);
+            File outputFile = new File("output_" + fileName.split("_name")[0] +"" +
+                    ".txt");
+            outputFile.createNewFile();
+            FileWriter writer = new FileWriter(outputFile, true);
             while((s = bufferedReader.readLine()) != null) {
                 if(s.contains("Insert(")) {
                     double key = Double.parseDouble(s.split("Insert\\(")[1].split
@@ -22,35 +26,38 @@ public class Solution {
                     tree.insert(key, val);
                     if(isDebugMode)  System.out.println(tree.toString());
                 } else if(s.contains("Search(")) {
+                    // writer.write(tree.toString() + "\n");
                     if(s.contains(",")) {
                         double key1 = Double.parseDouble(s.split("Search\\(")[1].split(",")[0]);
                         double key2 = Double.parseDouble(s.split("Search\\(")[1].split(",")[1].split("\\)")[0]);
                         ArrayList<Pair> pairs = tree.search(key1, key2);
                         if(pairs.isEmpty()) {
-                            System.out.println("Null");
+                            writer.write("Null\n");
                         } else {
                             StringJoiner out = new StringJoiner(",");
                             for(Pair pair:pairs) {
                                 out.add(pair.toString());
                             }
-                            System.out.println(out.toString());
+                            writer.write(out.toString() + "\n");
                         }
                     } else {
                         double key = Double.parseDouble(s.split("Search\\(")[1].split
                                 ("\\)")[0]);
                         ArrayList<Pair> pairs = tree.search(key);
                         if(pairs.isEmpty()) {
-                            System.out.println("Null");
+                            writer.write("Null\n");
                         } else {
                             StringJoiner out = new StringJoiner(",");
                             for (Pair pair : pairs) {
                                 out.add(pair.val);
                             }
-                            System.out.println(out.toString());
+                            writer.write(out.toString() + "\n");
                         }
                     }
                 }
             }
+            writer.flush();
+            writer.close();
             bufferedReader.close();
         } catch(FileNotFoundException ex) {
             System.out.println("Unable to open file '" + fileName + "'");

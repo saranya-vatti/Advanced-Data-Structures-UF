@@ -38,8 +38,10 @@ class Node {
     public String getValue (int index) {
         return "Null";
     }
-    public Node getNext () {
+    public Leaf getNext () {
         return null;
+    }
+    public void setNext (Leaf next) {
     }
     public void addVal (int index, String val) {
     }

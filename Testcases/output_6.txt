@@ -1,0 +1,82 @@
+Level 1-> [-47.84, 105.88]
+Level 2-> [-458.08, -420.12, -353.34, -253.57, -145.85]
+Level 2-> [26.72, 80.4]
+Level 2-> [212.59, 292.94, 435.2]
+Level 3-> [-489.76, -476.24, -461.61]
+Level 3-> [-442.91, -432.97]
+Level 3-> [-415.37, -411.43, -385.24, -362.1]
+Level 3-> [-338.7, -320.62, -303.81, -281.04, -266.69]
+Level 3-> [-234.56, -200.43, -189.27, -170.19]
+Level 3-> [-113.16, -95.91, -74.57]
+Level 3-> [-28.83, -13.78, -4.66, 0.89, 17.99]
+Level 3-> [37.58, 42.02, 54.56, 64.73]
+Level 3-> [89.62, 93.24, 99.82]
+Level 3-> [123.31, 143.98, 191.5]
+Level 3-> [229.81, 251.11, 271.42, 282.81]
+Level 3-> [311.0, 348.98, 377.44, 395.79, 426.84]
+Level 3-> [450.49, 465.39, 475.61, 490.62, 494.98]
+Level 4-> -496.57,Value109; -494.98,Value194; -494.01,Value30; -489.95,Value107; 
+Level 4-> -489.76,Value82; -482.76,Value64; -478.43,Value223; 
+Level 4-> -476.24,Value215; -471.7,Value196; -463.88,Value129; 
+Level 4-> -461.61,Value145; -461.36,Value131; -459.1,Value152; 
+Level 4-> -458.08,Value3; -449.53,Value6; -447.49,Value51; 
+Level 4-> -442.91,Value45; -436.94,Value174; -436.92,Value46; 
+Level 4-> -432.97,Value187; -431.56,Value227; -424.83,Value119; -422.49,Value110; 
+Level 4-> -420.12,Value35; -416.24,Value0; -415.48,Value203; 
+Level 4-> -415.37,Value90; -414.8,Value190; -414.62,Value161; 
+Level 4-> -411.43,Value5; -403.61,Value17; -401.16,Value79; -390.13,Value22; -386.62,Value137; 
+Level 4-> -385.24,Value1; -382.8,Value165; -373.35,Value138; -372.56,Value162; -369.15,Value87; 
+Level 4-> -362.1,Value4; -361.94,Value146; -354.15,Value68; 
+Level 4-> -353.34,Value43; -347.03,Value83; -344.44,Value69; 
+Level 4-> -338.7,Value85; -338.3,Value193; -332.83,Value67; -329.77,Value121; -322.44,Value224; 
+Level 4-> -320.62,Value112; -312.65,Value66; -305.76,Value124; 
+Level 4-> -303.81,Value32; -301.56,Value108; -296.8,Value176; -288.65,Value74; 
+Level 4-> -281.04,Value28; -276.13,Value144; -271.32,Value163; -269.42,Value126; -268.19,Value63; 
+Level 4-> -266.69,Value52; -264.14,Value204; -262.62,Value53; -260.5,Value205; -254.73,Value57; 
+Level 4-> -253.57,Value24; -248.43,Value150; -244.17,Value120; -241.39,Value70; 
+Level 4-> -234.56,Value25; -231.13,Value102; -220.55,Value105; -209.77,Value214; 
+Level 4-> -200.43,Value40; -194.12,Value225; -190.36,Value156; 
+Level 4-> -189.27,Value177; -185.19,Value77; -172.01,Value88; 
+Level 4-> -170.19,Value134; -167.77,Value117; -149.98,Value80; 
+Level 4-> -145.85,Value58; -130.69,Value192; -122.62,Value197; -117.34,Value216; 
+Level 4-> -113.16,Value171; -112.9,Value188; -100.21,Value210; 
+Level 4-> -95.91,Value154; -92.51,Value116; -89.84,Value191; -85.51,Value128; -75.25,Value195; 
+Level 4-> -74.57,Value26; -53.33,Value142; -51.74,Value166; -49.58,Value29; 
+Level 4-> -47.84,Value18; -46.23,Value36; -41.94,Value208; -35.98,Value148; 
+Level 4-> -28.83,Value99; -28.74,Value100; -20.28,Value125; 
+Level 4-> -13.78,Value86; -12.82,Value199; -8.95,Value222; 
+Level 4-> -4.66,Value47; -3.84,Value207; -0.31,Value84; 
+Level 4-> 0.89,Value42; 1.04,Value50; 15.52,Value73; 
+Level 4-> 17.99,Value170; 22.75,Value48; 25.29,Value139; 
+Level 4-> 26.72,Value49; 27.37,Value9; 34.58,Value186; 36.57,Value226; 
+Level 4-> 37.58,Value168; 37.78,Value71; 39.46,Value164; 
+Level 4-> 42.02,Value23; 44.15,Value133; 46.7,Value103; 48.68,Value135; 
+Level 4-> 54.56,Value60; 54.74,Value213; 56.49,Value132; 61.27,Value54; 
+Level 4-> 64.73,Value8; 72.12,Value34; 76.48,Value78; 
+Level 4-> 80.4,Value167; 82.95,Value140; 89.44,Value130; 
+Level 4-> 89.62,Value44; 90.34,Value228; 91.27,Value141; 
+Level 4-> 93.24,Value178; 93.55,Value209; 97.4,Value7; 
+Level 4-> 99.82,Value147; 100.15,Value21; 105.7,Value136; 
+Level 4-> 105.88,Value16; 106.11,Value185; 112.36,Value114; 115.3,Value104; 120.92,Value111; 
+Level 4-> 123.31,Value61; 135.74,Value172; 141.23,Value180; 141.42,Value179; 
+Level 4-> 143.98,Value20; 152.43,Value92; 154.24,Value211; 178.83,Value127; 182.46,Value221; 
+Level 4-> 191.5,Value72; 191.6,Value81; 200.65,Value115; 208.16,Value76; 
+Level 4-> 212.59,Value97; 216.3,Value181; 225.45,Value122; 
+Level 4-> 229.81,Value159; 230.55,Value11; 244.85,Value101; 
+Level 4-> 251.11,Value12; 258.53,Value160; 263.99,Value206; 266.48,Value217; 271.42,Value212; 
+Level 4-> 271.42,Value184; 271.42,Value149; 271.42,Value113; 280.83,Value219; 
+Level 4-> 282.81,Value106; 284.91,Value56; 287.36,Value93; 
+Level 4-> 292.94,Value98; 293.27,Value75; 298.52,Value158; 301.29,Value41; 305.31,Value218; 
+Level 4-> 311.0,Value14; 312.26,Value62; 313.65,Value182; 318.22,Value153; 336.83,Value96; 
+Level 4-> 348.98,Value37; 360.5,Value59; 364.78,Value175; 
+Level 4-> 377.44,Value201; 379.95,Value220; 387.83,Value202; 390.23,Value143; 
+Level 4-> 395.79,Value39; 408.83,Value198; 411.35,Value151; 419.85,Value169; 
+Level 4-> 426.84,Value19; 427.32,Value89; 433.92,Value13; 
+Level 4-> 435.2,Value15; 437.49,Value10; 442.4,Value173; 445.65,Value157; 
+Level 4-> 450.49,Value118; 458.84,Value31; 464.83,Value123; 
+Level 4-> 465.39,Value27; 468.06,Value189; 473.7,Value33; 
+Level 4-> 475.61,Value183; 481.65,Value55; 487.5,Value200; 490.44,Value155; 
+Level 4-> 490.62,Value65; 492.67,Value2; 492.69,Value38; 
+Level 4-> 494.98,Value91; 495.68,Value94; 495.87,Value95; 
+
+(-28.83,Value99),(-28.74,Value100),(-20.28,Value125),(-13.78,Value86),(-12.82,Value199),(-8.95,Value222),(-4.66,Value47),(-3.84,Value207),(-0.31,Value84),(0.89,Value42),(1.04,Value50),(15.52,Value73),(17.99,Value170),(22.75,Value48),(25.29,Value139),(26.72,Value49),(27.37,Value9),(34.58,Value186),(36.57,Value226),(37.58,Value168),(37.78,Value71),(39.46,Value164),(42.02,Value23),(44.15,Value133),(46.7,Value103),(48.68,Value135),(54.56,Value60),(54.74,Value213),(56.49,Value132)

@@ -2,6 +2,8 @@ package com.company;
 import com.company.InternalNode;
 import com.company.Node;
 import com.company.Pair;
+
+import java.lang.reflect.Array;
 import java.util.*;
 
 import java.util.ArrayList;
@@ -45,42 +47,71 @@ class BPlusTree {
      * @return List of values whose keys match the given range
      */
     public ArrayList<Pair> search(Node node, double startKey, double endKey) {
-        Node currNode = node;
-        ArrayList<Double> currNodeKeys = currNode.getKeys();
+        ArrayList<Pair> pairs = new ArrayList<>();
+
+        // If the node is null, it means we have fallen off the tree and the there
+        // are no keys within the given range. We return an empty object.
+        if(node == null) return pairs;
+
+        if (!node.isLeaf()) {
+
+            // If current node is not a leaf, it means, the potential leaf with the
+            // startKey is one of the
+            // descendants of this node - we iterate over the node to find the child and
+            // trickle down the path
+            // We recursively follow the path from root to the leaf node where the
+            // startKey is supposed to reside
+            if (Double.compare(endKey, node.getLeastKey()) < 0) {
+                return search(node.getChildNode(0), startKey, endKey);
+            }
+            if (Double.compare(startKey, node.getHighestKey()) > 0) {
+                return search(node.getLastNode(), startKey, endKey);
+            }
+            ArrayList<Double> nodeKeys = node.getKeys();
+            int index;
+            for (index = nodeKeys.size() - 1; index >= 0; index--) {
+                if (Double.compare(nodeKeys.get(index), startKey) < 0) break;
+            }
+            return search(node.getChildNode(index + 1), startKey, endKey);
+        }
+
+        // We found the leaf!
+        // This is where the startKey resides, if its present
+        ArrayList<Double> nodeKeys = node.getKeys();
         int index;
-        for (index = currNodeKeys.size() - 1; index >= 0; index--) {
-            if (Double.compare(currNodeKeys.get(index), startKey) < 0) break;
+        for (index = nodeKeys.size() - 1; index >= 0; index--) {
+            if (Double.compare(nodeKeys.get(index), startKey) < 0) break;
         }
         index++;
-        debug("1 Broke at : " + currNodeKeys.get(index));
-        if (currNode.isLeaf()) {
-            // Every key in the leaf is greater than start key
-            // We will then search the node from the start to find keys that fit range
-            ArrayList<Pair> pairs = new ArrayList<>();
-            double currKey = currNode.getKey(index);
-            while (Double.compare(currKey, endKey) <= 0) {
-                Pair pair = new Pair(currKey, currNode.getValue(index));
-                pairs.add(pair);
-                index++;
-                if (index >= currNode.getNumOfKeys()) {
-                    if(currNode.getNext() != null) {
-                        currNode = currNode.getNext();
-                    } else {
-                        break;
-                    }
-                    index = 0;
-                }
-                currKey = currNode.getKey(index);
+        if(index >= nodeKeys.size()) {
+            Node next = node.getNext();
+            if(next == null) {
+                return pairs;
+            } else {
+                index = 0;
+                node = node.getNext();
+                nodeKeys = node.getKeys();
             }
-            return pairs;
         }
-        if (Double.compare(startKey, currNode.getLeastKey()) < 0) {
-            return search(currNode.getChildNode(0), startKey, endKey);
+        debug("1 Broke at : " + nodeKeys.get(index));
+        // Every key in the leaf is greater than start key
+        // We will then search the node from the start to find keys that fit range
+        double currKey = node.getKey(index);
+        while (Double.compare(currKey, endKey) <= 0) {
+            Pair pair = new Pair(currKey, node.getValue(index));
+            pairs.add(pair);
+            index++;
+            if (index >= node.getNumOfKeys()) {
+                if(node.getNext() != null) {
+                    node = node.getNext();
+                } else {
+                    break;
+                }
+                index = 0;
+            }
+            currKey = node.getKey(index);
         }
-        if (Double.compare(startKey, currNode.getHighestKey()) > 0) {
-            return search(currNode.getLastNode(), startKey, endKey);
-        }
-        return search(currNode.getChildNode(index + 1), startKey, endKey);
+        return pairs;
     }
 
     /**
@@ -105,6 +136,7 @@ class BPlusTree {
     }
 
     public void insert (double key, String value) {
+        debug("Inserting key : " + key + ", value : " + value);
         if(root == null) {
             ArrayList<Double> leafKeyList = new ArrayList<>();
             leafKeyList.add(key);
@@ -151,15 +183,16 @@ class BPlusTree {
                                 valList.add(currNode.getValue(i));
                                 currNode.removeVal(i);
                             } else {
-                                nodeList.add(currNode.getChildNode(i));
-                                currNode.removeChildNode(i);
+                                nodeList.add(currNode.getChildNode(i+1));
+                                currNode.removeChildNode(i+1);
                             }
                         }
                         debug("9 Going to move keys : " + Arrays
                                 .toString(keyList.toArray()));
                         if (currNode.isLeaf()) debug("10 Going to move " +
                                 "values : " + Arrays.toString(valList.toArray()));
-                        debug("11 : " + this.toString());
+                        else debug("11 Going to move " +
+                                "node : " + Arrays.toString(nodeList.toArray()));
                         Node parent;
                         int parentIndex;
                         if(visited.isEmpty()) {
@@ -175,6 +208,8 @@ class BPlusTree {
                             parent = visited.pop();
                             parentIndex = indexes.pop();
                         }
+                        debug("12 : " + this.toString());
+                        debug("Current Node : " + currNode.toString());
 
                         if (currNode.isLeaf()) {
                             // We create a new leaf and add the pointer from the
@@ -187,19 +222,30 @@ class BPlusTree {
                             // element remaining in the node's keylist will be the
                             // earlier mid key
                             parent.addKey(parentIndex, newLeaf.getKey(0));
-                            debug("12 : " + parent.toString());
+                            debug("13 : " + parent.toString());
+                            newLeaf.setNext(currNode.getNext());
+                            currNode.setNext(newLeaf);
                         } else {
+                            debug("14 : New key list : " + Arrays.toString(keyList
+                                    .toArray()));
+                            debug("15 : New node list : " + Arrays.toString(nodeList
+                                    .toArray()));
+
                             // We create a new internal node and add the pointer from
                             // the parent internal node to the new internal node at
                             // the correct index
                             InternalNode newNode = new InternalNode(keyList, nodeList);
-                            parent.addChildNode(index, newNode);
 
                             // We have removed all the keys with mid+1. So the last
                             // element remaining in the node's keylist will be the
                             // earlier mid key
                             parent.addKey(parentIndex, newNode.getKey(0));
-                            debug("12 : " + parent.toString());
+
+                            // We will remove the key from the first index as we
+                            // already added this to parent
+                            newNode.removeKey(0);
+                            parent.addChildNode(parentIndex+1, newNode);
+                            debug("16 : " + parent.toString());
                         }
                         currNode = parent;
                     }
@@ -227,24 +273,28 @@ class BPlusTree {
         Queue<Node> qu = new LinkedList<>();
         qu.add(root);
         while(!qu.isEmpty()) {
-            Node parent = qu.remove();
-            result.append("Level ");
-            result.append(level);
-            result.append("-> ");
-            if(parent.isLeaf()) {
-                for(int i=0;i<parent.getKeys().size();i++) {
-                    result.append(parent.getKey(i));
-                    result.append(",");
-                    result.append(parent.getValue(i));
-                    result.append("; ");
+            Queue<Node> tmpque = new LinkedList<>(qu);
+            while(!tmpque.isEmpty()) {
+                Node parent = tmpque.remove();
+                qu.remove();
+                result.append("Level ");
+                result.append(level);
+                result.append("-> ");
+                if(parent.isLeaf()) {
+                    for(int i=0;i<parent.getKeys().size();i++) {
+                        result.append(parent.getKey(i));
+                        result.append(",");
+                        result.append(parent.getValue(i));
+                        result.append("; ");
+                    }
+                    result.append("\n");
+                } else {
+                    result.append(Arrays.toString(parent.getKeys().toArray()));
+                    result.append("\n");
+                    qu.addAll(parent.getChildren());
                 }
-                result.append("\n");
-            } else {
-                result.append(Arrays.toString(parent.getKeys().toArray()));
-                result.append("\n");
-                qu.addAll(parent.getChildren());
-                level++;
             }
+            level++;
         }
         return result.toString();
     }

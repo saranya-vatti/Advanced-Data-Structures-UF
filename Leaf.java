@@ -13,18 +13,6 @@ class Leaf extends Node {
     public void setValues(ArrayList<String> vArr) {
         this.values = vArr;
     }
-    public Leaf getNextLeaf() {
-        return this.next;
-    }
-    public void setNextLeaf(Leaf nxt) {
-        this.next = nxt;
-    }
-    public Leaf getPreviousLeaf() {
-        return this.prev;
-    }
-    public void setPreviousLeaf(Leaf prv) {
-        this.prev = prv;
-    }
     public boolean isLeaf() {
         return true;
     }
@@ -39,8 +27,12 @@ class Leaf extends Node {
         return this.values.get(index);
     }
     @Override
-    public Node getNext () {
+    public Leaf getNext () {
         return this.next;
+    }
+    @Override
+    public void setNext(Leaf nxt) {
+        this.next = nxt;
     }
     @Override
     public void addVal (int index, String val) {
