@@ -1,6 +1,6 @@
 package com.company;
-import java.util.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 class InternalNode extends Node {
 

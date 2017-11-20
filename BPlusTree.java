@@ -1,37 +1,17 @@
 package com.company;
-import com.company.InternalNode;
-import com.company.Node;
-import com.company.Pair;
-
-import java.lang.reflect.Array;
-import java.util.*;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 
 class BPlusTree {
     private Node root;
-    private int order;
     private int MAX_NODE_SIZE;
-    private boolean isDebugMode = false;
 
-    private void debug(String s) {
-        if(isDebugMode) System.out.println(s);
-    }
-
-    BPlusTree(int order, boolean isDebugMode) {
+    BPlusTree(int order) {
         this.root = null;
-        this.order = order;
         this.MAX_NODE_SIZE = order - 1;
-        this.isDebugMode = isDebugMode;
-    }
-
-    /**
-     * Unit testing "search"
-     * @param root Root of the already built B+ Tree
-     */
-    BPlusTree(Node root) {
-        this.root = root;
     }
 
     /**
@@ -93,7 +73,6 @@ class BPlusTree {
                 nodeKeys = node.getKeys();
             }
         }
-        debug("1 Broke at : " + nodeKeys.get(index));
         // Every key in the leaf is greater than start key
         // We will then search the node from the start to find keys that fit range
         double currKey = node.getKey(index);
@@ -136,7 +115,6 @@ class BPlusTree {
     }
 
     public void insert (double key, String value) {
-        debug("Inserting key : " + key + ", value : " + value);
         if(root == null) {
             ArrayList<Double> leafKeyList = new ArrayList<>();
             leafKeyList.add(key);
@@ -153,7 +131,6 @@ class BPlusTree {
         indexes.push(-1);
         Node currNode = root;
         while(currNode != null) {
-            debug("1 : " + this.toString());
             visited.push(currNode);
             if(currNode.isLeaf() || Double.compare(key, currNode.getLeastKey()) >=0 &&
                     Double.compare(key,currNode.getHighestKey()) < 0 ) {
@@ -161,18 +138,11 @@ class BPlusTree {
                 for (index = currNode.getKeys().size() - 1; index >= 0; index--) {
                     if (Double.compare(currNode.getKeys().get(index), key) < 0) break;
                 }
-                debug("2 : " + currNode.toString());
-                debug("3 : " + index);
                 if (currNode.isLeaf()) {
                     currNode.addKey(index + 1, key);
                     currNode.addVal(index + 1, value);
-                    debug("4 : " + currNode.toString());
                     currNode = visited.pop();
-                    debug("5 : " + currNode.toString());
-                    debug("6 : " + currNode.getNumOfKeys());
-                    debug("7 MAX_NODE_SIZE : " + MAX_NODE_SIZE);
                     while(currNode.getNumOfKeys() > MAX_NODE_SIZE) {
-                        debug("8 : " + this.toString());
                         ArrayList<Double> keyList = new ArrayList<>();
                         ArrayList<String> valList = new ArrayList<>();
                         ArrayList<Node> nodeList = new ArrayList<>();
@@ -187,12 +157,6 @@ class BPlusTree {
                                 currNode.removeChildNode(i+1);
                             }
                         }
-                        debug("9 Going to move keys : " + Arrays
-                                .toString(keyList.toArray()));
-                        if (currNode.isLeaf()) debug("10 Going to move " +
-                                "values : " + Arrays.toString(valList.toArray()));
-                        else debug("11 Going to move " +
-                                "node : " + Arrays.toString(nodeList.toArray()));
                         Node parent;
                         int parentIndex;
                         if(visited.isEmpty()) {
@@ -208,8 +172,6 @@ class BPlusTree {
                             parent = visited.pop();
                             parentIndex = indexes.pop();
                         }
-                        debug("12 : " + this.toString());
-                        debug("Current Node : " + currNode.toString());
 
                         if (currNode.isLeaf()) {
                             // We create a new leaf and add the pointer from the
@@ -222,14 +184,9 @@ class BPlusTree {
                             // element remaining in the node's keylist will be the
                             // earlier mid key
                             parent.addKey(parentIndex, newLeaf.getKey(0));
-                            debug("13 : " + parent.toString());
                             newLeaf.setNext(currNode.getNext());
                             currNode.setNext(newLeaf);
                         } else {
-                            debug("14 : New key list : " + Arrays.toString(keyList
-                                    .toArray()));
-                            debug("15 : New node list : " + Arrays.toString(nodeList
-                                    .toArray()));
 
                             // We create a new internal node and add the pointer from
                             // the parent internal node to the new internal node at
@@ -245,7 +202,6 @@ class BPlusTree {
                             // already added this to parent
                             newNode.removeKey(0);
                             parent.addChildNode(parentIndex+1, newNode);
-                            debug("16 : " + parent.toString());
                         }
                         currNode = parent;
                     }

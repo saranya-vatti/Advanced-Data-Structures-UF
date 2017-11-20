@@ -1,7 +1,4 @@
 package com.company;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 class Pair {
     double key;

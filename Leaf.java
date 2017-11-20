@@ -1,25 +1,15 @@
 package com.company;
-import com.company.Node;
-
 import java.util.ArrayList;
 
 class Leaf extends Node {
     private ArrayList<String> values;
-    private Leaf prev;
     private Leaf next;
-    public ArrayList<String> getValues() {
-        return this.values;
-    }
-    public void setValues(ArrayList<String> vArr) {
-        this.values = vArr;
-    }
     public boolean isLeaf() {
         return true;
     }
     Leaf (ArrayList<Double> keys, ArrayList<String> values) {
         super(keys);
         this.values = values;
-        this.prev = null;
         this.next = null;
     }
     @Override
