@@ -2,7 +2,7 @@ package com.company;
 import java.util.ArrayList;
 import java.util.Collections;
 
-class Node {
+abstract class Node {
     // size = numOfKeys
     private ArrayList<Double> keys;
 
@@ -16,9 +16,7 @@ class Node {
         Collections.sort(keys);
         this.keys = keys;
     }
-    public boolean isLeaf() {
-        return true;
-    }
+    abstract boolean isLeaf();
     public int getNumOfKeys() {
         // numOfKeys will be 2 or 3 or 4 for 2-3-4 trees (B trees of order 4)
         return keys.size();

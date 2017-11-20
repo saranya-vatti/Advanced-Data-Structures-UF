@@ -12,14 +12,9 @@ public class Solution {
             FileReader fileReader = new FileReader(fileName);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             BPlusTree tree = new BPlusTree(Integer.parseInt(bufferedReader.readLine()));
-            File outputFile = new File("output_" + fileName.split("_name")[0] +"" +
-                    ".txt");
-            File debugFile = new File("debug_" + fileName.split("_name")[0] +"" +
-                    ".txt");
+            File outputFile = new File("output_file.txt");
             outputFile.createNewFile();
-            debugFile.createNewFile();
             FileWriter outputWriter = new FileWriter(outputFile, true);
-            FileWriter debugWriter = new FileWriter(outputFile, true);
             while((s = bufferedReader.readLine()) != null) {
                 if(s.contains("Insert(")) {
                     double key = Double.parseDouble(s.split("Insert\\(")[1].split
@@ -56,11 +51,8 @@ public class Solution {
                     }
                 }
             }
-            if(isDebugMode)  debugWriter.write(tree.toString() + "\n");
             outputWriter.flush();
-            debugWriter.flush();
             outputWriter.close();
-            debugWriter.close();
             bufferedReader.close();
         } catch(FileNotFoundException ex) {
             System.out.println("Unable to open file '" + fileName + "'");
