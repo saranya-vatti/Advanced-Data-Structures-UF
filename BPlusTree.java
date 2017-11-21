@@ -76,7 +76,6 @@ public class BPlusTree {
             } else {
                 index = 0;
                 node = node.getNext();
-                nodeKeys = node.getKeys();
             }
         }
         // Every key in the leaf is greater than start key
