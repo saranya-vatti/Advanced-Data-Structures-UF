@@ -1,5 +1,3 @@
-package com.ufl;
-
 class Pair {
     double key;
     String val;
