@@ -50,7 +50,7 @@ public class Main {
                     }
                 }
             }
-            System.out.println(tree);
+            // System.out.println(tree);
             outputWriter.flush();
             outputWriter.close();
             bufferedReader.close();
