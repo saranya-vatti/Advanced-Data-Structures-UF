@@ -9,7 +9,7 @@
  * Description: Creates a tree and performs search and inserts from a given file in a
  * given format
  */
-package com.company;
+package com.ufl;
 import java.io.*;
 import java.util.*;
 public class treesearch {
