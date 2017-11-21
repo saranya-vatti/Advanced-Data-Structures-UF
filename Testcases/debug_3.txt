@@ -3511,4 +3511,5 @@ Level 7-> 497.93,Value9091; 497.98,Value7098; 498.11,Value2292;
 Level 7-> 498.34,Value2682; 498.42,Value8045; 498.65,Value1032; 498.81,Value4969; 
 Level 7-> 498.81,Value626; 498.82,Value6584; 499.02,Value8289; 
 Level 7-> 499.1,Value1234; 499.13,Value9188; 499.18,Value4763; 499.2,Value2018; 
-Level 7-> 499.41,Value4033; 499.53,Value2643; 499.72,Value7447; 499.97,Value2476;
+Level 7-> 499.41,Value4033; 499.53,Value2643; 499.72,Value7447; 499.97,Value2476; 
+

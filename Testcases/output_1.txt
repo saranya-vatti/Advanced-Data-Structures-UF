@@ -1,6 +1,5 @@
-Value67,Value1
-(-3.91,Value54609),(0.02,Value98),(3.55,Value67),(3.55,Value1),(4.01,Value10)
+Value67,Value2,Value1
+(-3.91,Value54609),(0.02,Value98),(3.55,Value67),(3.55,Value2),(3.55,Value1),(4.01,Value10)
 Null
-Value67,Value1
-(-3.91,Value54609),(0.02,Value98),(3.55,Value67),(3.55,Value1),(4.01,Value10)
-Null
+Level 1-> -109.23,Value43234; -3.95,Value23; -3.91,Value54609; 0.02,Value98; 3.26,Value56089; 3.55,Value67; 3.55,Value2; 3.55,Value1; 4.01,Value10; 39.56,Value2; 121.56,Value1234;
+
