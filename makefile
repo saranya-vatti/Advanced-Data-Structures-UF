@@ -1,20 +1,8 @@
-JFLAGS = -g
-JC = javac
-.SUFFIXES: .java .class
-.java.class:
-		$(JC) $(JFLAGS) $*.java
+default:
+	javac -g treesearch.java BPlusTree.java Leaf.java InternalNode.java Node.java Pair.java
 
-CLASSES = \
-		Pair.java \
-		Node.java \
-		InternalNode.java \
-		Leaf.java \
-		BPlusTree.java \
-		treesearch.java
-
-default: classes
-
-classes: $(CLASSES:.java=.class)
+run:
+	treesearch.class
 
 clean:
-		$(RM) *.class
+	$(RM) *.class

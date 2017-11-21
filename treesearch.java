@@ -32,17 +32,21 @@ public class treesearch {
                     tree.insert(key, val);
                 } else if(s.contains("Search(")) {
                     if(s.contains(",")) {
-                        double key1 = Double.parseDouble(s.split("Search\\(")[1].split(",")[0]);
-                        double key2 = Double.parseDouble(s.split("Search\\(")[1].split(",")[1].split("\\)")[0]);
-                        ArrayList<Pair> pairs = tree.search(key1, key2);
+                        double startKey = Double.parseDouble(s.split("Search\\(")[1]
+                                .split(",")[0]);
+                        double endKey = Double.parseDouble(s.split("Search\\(")[1]
+                                .split(",")[1].split("\\)")[0]);
+                        ArrayList<Pair> pairs = tree.search(startKey, endKey);
                         if(pairs.isEmpty()) {
                             outputWriter.write("Null\n");
                         } else {
-                            StringJoiner out = new StringJoiner(",");
+                            StringBuilder out = new StringBuilder("");
                             for(Pair pair:pairs) {
-                                out.add(pair.toString());
+                                out.append(pair.toString());
+                                out.append(",");
                             }
-                            outputWriter.write(out.toString() + "\n");
+                            outputWriter.write(out.deleteCharAt(out.length() - 1).toString()
+                                    + "\n");
                         }
                     } else {
                         double key = Double.parseDouble(s.split("Search\\(")[1].split
@@ -51,11 +55,13 @@ public class treesearch {
                         if(pairs.isEmpty()) {
                             outputWriter.write("Null\n");
                         } else {
-                            StringJoiner out = new StringJoiner(",");
+                            StringBuilder out = new StringBuilder("");
                             for (Pair pair : pairs) {
-                                out.add(pair.val);
+                                out.append(pair.val);
+                                out.append(",");
                             }
-                            outputWriter.write(out.toString() + "\n");
+                            outputWriter.write(out.deleteCharAt(out.length() - 1).toString()
+                                    + "\n");
                         }
                     }
                 }
