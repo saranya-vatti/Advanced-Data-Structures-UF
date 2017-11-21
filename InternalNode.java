@@ -5,7 +5,7 @@ import java.util.Arrays;
 class InternalNode extends Node {
 
     // Arraylist of child pointers to other nodes - may be leaves or internal nodes
-    // size = numOfKeys + 1
+    // size will always be number of keys + 1
     private ArrayList<Node> children;
 
     /**
@@ -44,7 +44,7 @@ class InternalNode extends Node {
      * @param children {ArrayList<Node>} List of children - may be nodes or leaves
      */
     InternalNode(ArrayList<Double> keys, ArrayList<Node> children) {
-        super(keys);
+        super.setKeys(keys);
         this.children = children;
     }
 
@@ -65,7 +65,7 @@ class InternalNode extends Node {
     @Override
     public void addChildNode(int index, Node node) {
         if (index < 0) index = 0;
-        if (index >= children.size()) index = children.size() - 1;
+        if (index > children.size()) index = children.size() - 1;
         children.add(index, node);
     }
 

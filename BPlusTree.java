@@ -5,9 +5,9 @@ import java.util.Stack;
 import java.util.Queue;
 import java.util.LinkedList;
 
-class BPlusTree {
+public class BPlusTree {
     private Node root;
-    private int MAX_NODE_SIZE;
+    private final int MAX_NODE_SIZE;
 
     /**
      * Constructor for BPlusTree
@@ -112,12 +112,12 @@ class BPlusTree {
     /**
      * Returns all values associated with the key
      *
-     * @param key1 Starting key of the values that are needed
-     * @param key2 Ending key of the values that are needed
+     * @param startKey Starting key of the values that are needed
+     * @param endKey Ending key of the values that are needed
      * @return List of all the values for the keys that fall in the range
      */
-    public ArrayList<Pair> search(double key1, double key2) {
-        return search(root, key1, key2);
+    public ArrayList<Pair> search(double startKey, double endKey) {
+        return search(root, startKey, endKey);
     }
 
     public void insert (double key, String value) {
@@ -246,15 +246,6 @@ class BPlusTree {
      * differentation between the different child nodes within the same level.
      * @return {String} New line separated values, segregated per node, prepended by
      * the level number, example:
-     *  Level 1-> [7.07]
-     *  Level 2-> [3.03, 5.05]
-     *  Level 2-> [9.09, 11.011]
-     *  Level 3-> 1.01,Value1; 2.02,Value2;
-     *  Level 3-> 3.03,Value3; 4.04,Value4;
-     *  Level 3-> 5.05,Value5; 6.06,Value6;
-     *  Level 3-> 7.07,Value7; 8.08,Value8;
-     *  Level 3-> 9.09,Value9; 10.01,Value10;
-     *  Level 3-> 11.011,Value11; 12.012,Value12; 13.013,Value13;
      */
     @Override
     public String toString() {

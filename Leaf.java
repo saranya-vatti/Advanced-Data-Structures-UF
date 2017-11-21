@@ -8,7 +8,7 @@ class Leaf extends Node {
         return true;
     }
     Leaf (ArrayList<Double> keys, ArrayList<String> values) {
-        super(keys);
+        super.setKeys(keys);
         this.values = values;
         this.next = null;
     }
