@@ -70,7 +70,6 @@ public class treesearch {
                     }
                 }
             }
-            System.out.println(tree);
             outputWriter.flush();
             outputWriter.close();
             bufferedReader.close();
