@@ -17,12 +17,12 @@ class Leaf extends Node {
         return this.values.get(index);
     }
     @Override
-    public Leaf getNext () {
+    public Node getNext () {
         return this.next;
     }
     @Override
-    public void setNext(Leaf nxt) {
-        this.next = nxt;
+    public void setNext(Node nxt) {
+        this.next = (Leaf)nxt;
     }
     @Override
     public void addVal (int index, String val) {

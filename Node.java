@@ -69,10 +69,10 @@ class Node {
     public String getValue (int index) {
         return "Null";
     }
-    public Leaf getNext () {
+    public Node getNext () {
         return null;
     }
-    public void setNext (Leaf next) {
+    public void setNext (Node next) {
     }
     public void addVal (int index, String val) {
     }
