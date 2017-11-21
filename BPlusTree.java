@@ -9,6 +9,12 @@ class BPlusTree {
     private Node root;
     private int MAX_NODE_SIZE;
 
+    /**
+     * Constructor for BPlusTree
+     * We only need the max node size that is dictated by the order
+     * @param order {int} Any number greater than 3. This would be the max size of a
+     *             node + 1
+     */
     BPlusTree(int order) {
         this.root = null;
         this.MAX_NODE_SIZE = order - 1;
@@ -141,6 +147,9 @@ class BPlusTree {
                 if (currNode.isLeaf()) {
                     currNode.addKey(index + 1, key);
                     currNode.addVal(index + 1, value);
+
+                    // Now we use the nodes on the stack to check the size and split
+                    // if required
                     currNode = visited.pop();
                     while(currNode.getNumOfKeys() > MAX_NODE_SIZE) {
                         ArrayList<Double> keyList = new ArrayList<>();
@@ -149,10 +158,18 @@ class BPlusTree {
                         for(int i=(currNode.getKeys().size()/2);i<currNode.getKeys().size();) {
                             keyList.add(currNode.getKey(i));
                             currNode.removeKey(i);
+
+                            // If its a leaf, we need to create a new leaf and copy
+                            // over the keys and values and copy over a key to the
+                            // parent
                             if (currNode.isLeaf()) {
                                 valList.add(currNode.getValue(i));
                                 currNode.removeVal(i);
                             } else {
+
+                                // If its an internal node, we create a new internal
+                                // node, copy over the keys and child node and
+                                // remove the key that we push to the parent
                                 nodeList.add(currNode.getChildNode(i+1));
                                 currNode.removeChildNode(i+1);
                             }
@@ -160,6 +177,7 @@ class BPlusTree {
                         Node parent;
                         int parentIndex;
                         if(visited.isEmpty()) {
+
                             // We need to create a new parent as the root itself is
                             // maxed out
                             ArrayList<Double> newRootKeys = new ArrayList<>();
@@ -174,6 +192,7 @@ class BPlusTree {
                         }
 
                         if (currNode.isLeaf()) {
+
                             // We create a new leaf and add the pointer from the
                             // parent internal node to the new leaf at the correct
                             // index
@@ -221,6 +240,22 @@ class BPlusTree {
         }
     }
 
+    /**
+     * A debugger function where we can print out the tree. Helps in visualization
+     * for small trees. For large trees/ trees with large order, it's tough to
+     * differentation between the different child nodes within the same level.
+     * @return {String} New line separated values, segregated per node, prepended by
+     * the level number, example:
+     *  Level 1-> [7.07]
+     *  Level 2-> [3.03, 5.05]
+     *  Level 2-> [9.09, 11.011]
+     *  Level 3-> 1.01,Value1; 2.02,Value2;
+     *  Level 3-> 3.03,Value3; 4.04,Value4;
+     *  Level 3-> 5.05,Value5; 6.06,Value6;
+     *  Level 3-> 7.07,Value7; 8.08,Value8;
+     *  Level 3-> 9.09,Value9; 10.01,Value10;
+     *  Level 3-> 11.011,Value11; 12.012,Value12; 13.013,Value13;
+     */
     @Override
     public String toString() {
         if(root == null) return "";
